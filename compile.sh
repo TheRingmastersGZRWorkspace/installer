@@ -72,7 +72,7 @@ prettify() {
 set_version() {
     # Label must be up to 11 chars long (incremental numbers)
     anarchy_iso_label="ANARCHY10"
-    anarchy_iso_release="1.0.10"
+    anarchy_iso_release="1.0.11"
     anarchy_iso_name="anarchy-${anarchy_iso_release}-x86_64.iso"
 }
 
@@ -109,6 +109,9 @@ init() {
         'yay-bin'
         'openbox-themes'
         'arch-wiki-cli'
+        'pygtk'
+        'python2-distutils-extra'
+        'oblogout'
     )
 
     update_arch_iso
@@ -489,7 +492,7 @@ copy_config_files() {
 build_system() {
     echo -e "Installing packages to new system ..." | log
     # Install fonts, fbterm, fetchmirrors etc.
-    sudo pacman --root "${squashfs}" --cachedir "${squashfs}"/var/cache/pacman/pkg --noconfirm -Sy terminus-font acpi zsh-syntax-highlighting pacman-contrib
+    sudo pacman --root "${squashfs}" --cachedir "${squashfs}"/var/cache/pacman/pkg --noconfirm -Sy terminus-font acpi zsh-syntax-highlighting pacman-contrib broadcom-wl
     sudo pacman --root "${squashfs}" --cachedir "${squashfs}"/var/cache/pacman/pkg -Sl | awk '/\[installed\]$/ {print $1 "/" $2 "-" $3}' > "${custom_iso}"/arch/pkglist.x86_64.txt
     sudo pacman --root "${squashfs}" --cachedir "${squashfs}"/var/cache/pacman/pkg --noconfirm -Scc
     sudo rm -f "${squashfs}"/var/cache/pacman/pkg/*
